@@ -1,16 +1,99 @@
-# React + Vite
+# FoodieHub - Restaurant Food Ordering System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, full-stack restaurant food ordering application built with React and Flask.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Browse Menu**: View delicious food items with images and descriptions
+- **Shopping Cart**: Add items to cart with quantity management
+- **Checkout System**: Mock payment processing for demonstration
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
+- **Modern UI**: Clean, professional interface with smooth animations
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Frontend
+- React 18
+- React Router for navigation
+- Tailwind CSS for styling
+- Lucide React for icons
+- Vite for build tooling
 
-## Expanding the ESLint configuration
+### Backend
+- Python Flask
+- Flask-CORS for cross-origin requests
+- RESTful API architecture
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📦 Installation
+
+### Prerequisites
+- Node.js (v16 or higher)
+- Python 3.8+
+- npm or yarn
+
+### Frontend Setup
+```bash
+npm install
+npm run dev
+```
+
+### Backend Setup
+```bash
+cd backend
+python -m venv venv
+venv\Scripts\activate  # On Windows
+# or
+source venv/bin/activate  # On macOS/Linux
+pip install -r requirements.txt
+python run_server.py
+```
+
+## 🌐 Deployment
+
+### GitHub Repository
+https://github.com/HirthickCoder/D3R
+
+### Azure Deployment
+
+#### Frontend (Azure Static Web Apps)
+- Build command: `npm run build`
+- Output directory: `dist`
+- Configuration: `staticwebapp.config.json`
+
+#### Backend (Azure App Service)
+- Runtime: Python 3.x
+- Startup file: `run_server.py`
+- Location: `/backend`
+
+## 🧪 Testing
+
+Use any card details for testing the checkout:
+- **Card Number**: Any 16 digits (e.g., 4242 4242 4242 4242)
+- **Expiry**: Any future date (e.g., 12/25)
+- **CVC**: Any 3 digits (e.g., 123)
+
+## 📝 Environment Variables
+
+Create a `.env` file in the root directory:
+```
+PORT=3001
+```
+
+## 🤝 Contributing
+
+This is a demonstration project. Feel free to fork and modify for your own use.
+
+## 📄 License
+
+MIT License - feel free to use this project for learning and demonstration purposes.
+
+## 👨‍💻 Author
+
+**HirthickCoder**
+- GitHub: [@HirthickCoder](https://github.com/HirthickCoder)
+
+## 🙏 Acknowledgments
+
+- Built as a full-stack portfolio project
+- Demonstrates modern web development practices
+- No real payment processing - for demonstration only
