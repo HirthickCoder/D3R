@@ -4,7 +4,7 @@ import { useCart } from '../context/CartContext';
 import { Search, Filter, Plus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 const categories = ['All', 'Pizza', 'Pasta', 'Burgers', 'Salads', 'Desserts', 'Drinks'];
 
@@ -21,11 +21,11 @@ export default function Menu() {
     const fetchMenuItems = async () => {
       try {
         const response = await fetch(`${API_BASE_URL}/api/menu/`);
-        
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
+
         const data = await response.json();
         console.log('Fetched menu items from API:', data);
         setItems(data);
@@ -44,8 +44,8 @@ export default function Menu() {
   console.log('Is loading:', isLoading);
 
   const filteredItems = items.filter(item => {
-    const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                         item.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
@@ -68,14 +68,14 @@ export default function Menu() {
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-6">Our Menu</h1>
-        
+
         {/* Debug info - will be removed in production */}
         <div className="bg-yellow-50 p-4 rounded-lg mb-4">
           <p className="text-sm text-yellow-800">
-             {filteredItems.length} items found
+            {filteredItems.length} items found
           </p>
         </div>
-        
+
         {/* Search and Filter */}
         <div className="mb-8 flex flex-col md:flex-row gap-4">
           <div className="relative flex-1">
@@ -107,8 +107,8 @@ export default function Menu() {
             filteredItems.map((item) => (
               <div key={item.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300">
                 <div className="relative">
-                  <img 
-                    src={item.image} 
+                  <img
+                    src={item.image}
                     alt={item.name}
                     className="w-full h-48 object-cover"
                     onError={(e) => {
@@ -135,7 +135,7 @@ export default function Menu() {
                   <div className="flex gap-2">
                     <button
                       onClick={() => {
-                        addToCart({...item, quantity: 1});
+                        addToCart({ ...item, quantity: 1 });
                         // Optional: Show a toast notification
                         alert(`${item.name} added to cart!`);
                       }}
@@ -144,7 +144,7 @@ export default function Menu() {
                       <Plus size={18} />
                       Add to Cart
                     </button>
-                    <button 
+                    <button
                       onClick={() => navigate(`/menu/${item.id}`)}
                       className="px-4 py-2 border border-amber-600 text-amber-600 rounded-lg hover:bg-amber-50 transition-colors"
                     >

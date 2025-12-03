@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 export default function Home() {
   const { addToCart } = useCart();
@@ -15,11 +15,11 @@ export default function Home() {
     const fetchMenuItems = async () => {
       try {
         const response = await fetch(`${API_BASE_URL}/api/menu/`);
-        
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
+
         const data = await response.json();
         console.log('Fetched menu items from API:', data);
         setMenuItems(data);
@@ -35,8 +35,8 @@ export default function Home() {
   }, []);
 
   const categories = ['all', ...new Set(menuItems.map(item => item.category))];
-  const filteredItems = activeCategory === 'all' 
-    ? menuItems 
+  const filteredItems = activeCategory === 'all'
+    ? menuItems
     : menuItems.filter(item => item.category === activeCategory);
 
   if (isLoading) {
@@ -79,8 +79,8 @@ export default function Home() {
           <p className="text-xl mb-8 max-w-2xl mx-auto">
             Order your favorite meals from the best restaurants in town.
           </p>
-          <Link 
-            to="/menu" 
+          <Link
+            to="/menu"
             className="bg-white text-amber-600 px-8 py-3 rounded-full font-bold text-lg hover:bg-gray-100 transition"
           >
             View Full Menu
@@ -96,11 +96,10 @@ export default function Home() {
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`px-6 py-2 rounded-full font-medium capitalize ${
-                activeCategory === category
+              className={`px-6 py-2 rounded-full font-medium capitalize ${activeCategory === category
                   ? 'bg-amber-500 text-white'
                   : 'bg-white text-gray-700 hover:bg-gray-100'
-              }`}
+                }`}
             >
               {category}
             </button>
@@ -110,14 +109,14 @@ export default function Home() {
         {/* Menu Items Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredItems.map((item) => (
-            <div 
-              key={item.id} 
+            <div
+              key={item.id}
               className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
             >
               <div className="relative h-48">
                 <img
-                  src={item.image} 
-                  alt={item.name} 
+                  src={item.image}
+                  alt={item.name}
                   className="w-full h-full object-cover"
                 />
                 {item.popular && (
