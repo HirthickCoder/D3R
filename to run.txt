@@ -1,0 +1,12 @@
+Terminal 1 - Backend FastAPI: 
+
+cd C:\Users\Hirthick\my-react-app\backend
+python run_server.py
+
+
+Terminal 2 - Frontend React:
+cd C:\Users\Hirthick\my-react-app
+npm run dev
+
+
+
