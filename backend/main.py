@@ -23,7 +23,7 @@ app.add_middleware(
         "https://myrestaurants-apps-ezhfzcbwcabecrdb.eastus2-01.azurewebsites.net",  # Old Azure frontend
         "https://d3r-restaurant-frontend.azurestaticapps.net",  # New Azure Static Web App
         "https://*.azurestaticapps.net",  # Allow all Azure Static Web Apps subdomains
-        "https://d3r-frontend-g2dydbdqf4ug6hr.southeastasia-01.azurewebsites.net",  # New frontend App Service
+        "https://d3r-frontend-g2dydbdqf4fug6hr.southeastasia-01.azurewebsites.net",  # New frontend App Service
         "https://*.azurewebsites.net",  # Allow all Azure App Service subdomains
     ],
     allow_credentials=True,
