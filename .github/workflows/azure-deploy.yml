@@ -30,6 +30,7 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'D3projectrestaurantsofficial'
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          app-name: 'd3r-restaurant-backend'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D658520164194D879DAF034512AA7F2F }}
           package: './backend'
+

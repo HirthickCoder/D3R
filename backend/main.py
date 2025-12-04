@@ -20,7 +20,9 @@ app.add_middleware(
         "http://localhost:5173",  # Vite default
         "http://localhost:3002",  # Your React URL
         "http://localhost:3000",  # Alternative port
-        "https://myrestaurants-apps-ezhfzcbwcabecrdb.eastus2-01.azurewebsites.net"  # Azure frontend
+        "https://myrestaurants-apps-ezhfzcbwcabecrdb.eastus2-01.azurewebsites.net",  # Old Azure frontend
+        "https://d3r-restaurant-frontend.azurestaticapps.net",  # New Azure Static Web App
+        "https://*.azurestaticapps.net"  # Allow all Azure Static Web Apps subdomains
     ],
     allow_credentials=True,
     allow_methods=["*"],
