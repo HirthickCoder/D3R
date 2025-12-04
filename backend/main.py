@@ -8,23 +8,21 @@ from typing import List, Optional
 from datetime import datetime
 import os
 
-# Create database tables
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-# CORS middleware configuration
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:5173",  # Vite default
-        "http://localhost:3002",  # Your React URL
-        "http://localhost:3000",  # Alternative port
-        "https://myrestaurants-apps-ezhfzcbwcabecrdb.eastus2-01.azurewebsites.net",  # Old Azure frontend
-        "https://d3r-restaurant-frontend.azurestaticapps.net",  # New Azure Static Web App
-        "https://*.azurestaticapps.net",  # Allow all Azure Static Web Apps subdomains
-        "https://d3r-frontend-g2dydbdqf4fug6hr.southeastasia-01.azurewebsites.net",  # New frontend App Service
-        "https://*.azurewebsites.net",  # Allow all Azure App Service subdomains
+        "http://localhost:5173",  
+        "http://localhost:3002", 
+        "http://localhost:3000",  
+        "https://myrestaurants-apps-ezhfzcbwcabecrdb.eastus2-01.azurewebsites.net", 
+        "https://d3r-restaurant-frontend.azurestaticapps.net", 
+        "https://*.azurestaticapps.net",  
+        "https://d3r-frontend-g2dydbdqf4fug6hr.southeastasia-01.azurewebsites.net",  
+        "https://*.azurewebsites.net", 
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -69,7 +67,6 @@ def get_menu_items(
     limit: int = 100, 
     db: Session = Depends(get_db)
 ):
-    # Add cache control headers
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "0"
@@ -83,7 +80,6 @@ def get_menu_item(
     response: Response,
     db: Session = Depends(get_db)
 ):
-    # Add cache control headers
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "0"
@@ -98,10 +94,8 @@ def create_menu_item(
     item: MenuItemCreate, 
     db: Session = Depends(get_db)
 ):
-    # Create new menu item
     db_item = MenuItem(**item.dict())
     
-    # Add to database
     db.add(db_item)
     db.commit()
     db.refresh(db_item)
