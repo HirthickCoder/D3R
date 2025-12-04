@@ -11,7 +11,7 @@
     "dev": "vite --port 3002",
     "build": "vite build",
     "preview": "vite preview --port 3002",
-    "preview:azure": "vite preview --host 0.0.0.0 --port 8080",
+    "preview:azure": "vite build && vite preview --host 0.0.0.0 --port 8080",
     "server": "node server.js",
     "start:all": "concurrently \"npm run dev\" \"npm run server\""
   },
