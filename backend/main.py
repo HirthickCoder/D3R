@@ -7,32 +7,6 @@ from pydantic import BaseModel, ConfigDict
 from typing import List, Optional
 from datetime import datetime
 import os
-
-# Create database tables
-Base.metadata.create_all(bind=engine)
-
-app = FastAPI()
-
-# CORS middleware configuration
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",  # Vite default
-        "http://localhost:3002",  # Your React URL
-        "http://localhost:3000",  # Alternative port
-        "https://myrestaurants-apps-ezhfzcbwcabecrdb.eastus2-01.azurewebsites.net",  # Old Azure frontend
-        "https://d3r-restaurant-frontend.azurestaticapps.net",  # New Azure Static Web App
-        "https://*.azurestaticapps.net"  # Allow all Azure Static Web Apps subdomains
-    ],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# Database dependency
-def get_db():
-    db = SessionLocal()
-    try:
         yield db
     finally:
         db.close()
