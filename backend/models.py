@@ -33,3 +33,14 @@ class HomePageContent(Base):
     order = Column(Integer, default=0)
     created_at = Column(String(50), default=datetime.utcnow)
     updated_at = Column(String(50), default=datetime.utcnow, onupdate=datetime.utcnow)
+
+class Client(Base):
+    __tablename__ = "clients"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    client_id = Column(String(50), unique=True, index=True, nullable=False)
+    client_key_hash = Column(String(255), nullable=False)
+    email = Column(String(255), unique=True, index=True, nullable=False)
+    name = Column(String(255), nullable=False)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime, default=datetime.utcnow)

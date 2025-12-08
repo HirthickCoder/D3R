@@ -2,11 +2,20 @@ from fastapi import FastAPI, HTTPException, Depends, status, Response
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from database import SessionLocal, engine
-from models import Base, MenuItem
+from models import Base, MenuItem, Client
 from pydantic import BaseModel, ConfigDict
 from typing import List, Optional
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
+from auth import (
+    generate_client_id, 
+    generate_client_key, 
+    get_client_key_hash, 
+    verify_client_key,
+    create_access_token,
+    get_current_client
+)
+
 
 Base.metadata.create_all(bind=engine)
 
@@ -55,10 +64,129 @@ class MenuItemResponse(MenuItemBase):
     
     model_config = ConfigDict(from_attributes=True)
 
+# Authentication Pydantic models
+class ClientRegister(BaseModel):
+    email: str
+    name: str
+
+class ClientRegisterResponse(BaseModel):
+    client_id: str
+    client_key: str
+    email: str
+    name: str
+    message: str
+
+class ClientLogin(BaseModel):
+    client_id: str
+    client_key: str
+
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str
+
+class ClientInfoResponse(BaseModel):
+    client_id: str
+    email: str
+    name: str
+    is_active: bool
+    created_at: datetime
+    
+    model_config = ConfigDict(from_attributes=True)
+
+
 # Routes
 @app.get("/")
 def read_root():
     return {"message": "Welcome to the Menu API"}
+
+# ============ AUTHENTICATION ENDPOINTS ============
+
+@app.post("/api/auth/register", response_model=ClientRegisterResponse, status_code=status.HTTP_201_CREATED)
+def register_client(client_data: ClientRegister, db: Session = Depends(get_db)):
+    """Register a new client and generate credentials"""
+    
+    # Check if email already exists
+    existing_client = db.query(Client).filter(Client.email == client_data.email).first()
+    if existing_client:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Email already registered"
+        )
+    
+    # Generate credentials
+    client_id = generate_client_id()
+    client_key = generate_client_key()
+    client_key_hash = get_client_key_hash(client_key)
+    
+    # Create new client
+    new_client = Client(
+        client_id=client_id,
+        client_key_hash=client_key_hash,
+        email=client_data.email,
+        name=client_data.name,
+        is_active=True
+    )
+    
+    db.add(new_client)
+    db.commit()
+    db.refresh(new_client)
+    
+    return {
+        "client_id": client_id,
+        "client_key": client_key,
+        "email": client_data.email,
+        "name": client_data.name,
+        "message": "Client registered successfully. Please save your client_key securely - it won't be shown again!"
+    }
+
+@app.post("/api/auth/login", response_model=TokenResponse)
+def login_client(credentials: ClientLogin, db: Session = Depends(get_db)):
+    """Login with client_id and client_key to get access token"""
+    
+    # Find client by client_id
+    client = db.query(Client).filter(Client.client_id == credentials.client_id).first()
+    
+    if not client:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid client_id or client_key"
+        )
+    
+    # Verify client_key
+    if not verify_client_key(credentials.client_key, client.client_key_hash):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid client_id or client_key"
+        )
+    
+    # Check if client is active
+    if not client.is_active:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Client account is inactive"
+        )
+    
+    # Create access token
+    access_token = create_access_token(data={"sub": client.client_id})
+    
+    return {
+        "access_token": access_token,
+        "token_type": "bearer"
+    }
+
+@app.get("/api/auth/client-info", response_model=ClientInfoResponse)
+def get_client_info(current_client: Client = Depends(get_current_client)):
+    """Get current authenticated client information"""
+    return current_client
+
+
+@app.get("/api/auth/clients", response_model=List[ClientInfoResponse])
+def list_all_clients(db: Session = Depends(get_db)):
+    """List all registered clients (admin endpoint)"""
+    clients = db.query(Client).all()
+    return clients
+
+# ============ MENU ENDPOINTS ============
 
 @app.get("/api/menu/", response_model=List[MenuItemResponse])
 def get_menu_items(
