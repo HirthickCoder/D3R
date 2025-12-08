@@ -31,7 +31,10 @@ app.add_middleware(
         "https://d3r-restaurant-frontend.azurestaticapps.net", 
         "https://*.azurestaticapps.net",  
         "https://d3r-frontend-g2dydbdqf4fug6hr.southeastasia-01.azurewebsites.net",  
-        "https://*.azurewebsites.net", 
+        "https://*.azurewebsites.net",
+        "https://d3r-frontend.onrender.com",  # Render frontend
+        "https://d3r-backend.onrender.com",   # Render backend
+        "https://*.onrender.com",  # All Render sites
     ],
     allow_credentials=True,
     allow_methods=["*"],
