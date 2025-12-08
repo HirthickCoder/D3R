@@ -16,70 +16,78 @@ def seed_menu_items():
             print(f"Database already has {existing_count} menu items. Skipping seed.")
             return
         
-        # Sample menu items
+        # Sample menu items matching your existing design
         menu_items = [
             MenuItem(
-                name="Margherita Pizza",
-                description="Fresh tomatoes, mozzarella, and basil",
-                price=299,
-                category="pizza",
-                image="/images/pizza.jpg",
+                name="Mushroom Dana",
+                description="Exotic slices with flavoring a deep, like rich and tangy magic come alive when a hearty Mushroom Dana makes it a flavorful delight",
+                price=9.99,
+                category="Main Course",
+                image="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=500",
                 popular=True
+            ),
+            MenuItem(
+                name="Cauliflower Rice",
+                description="A dish worth savoring, a fluff light and fluffy cauliflower rice presented in the most adventurous way possible",
+                price=11.99,
+                category="Main Course",
+                image="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500",
+                popular=False
+            ),
+            MenuItem(
+                name="Biryani",
+                description="Spices Royale",
+                price=12.99,
+                category="Main Course",
+                image="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500",
+                popular=True
+            ),
+            MenuItem(
+                name="Tiramisu",
+                description="Classic Italian dessert with coffee-soaked ladyfingers and marscapone cream",
+                price=7.99,
+                category="Dessert",
+                image="https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=500",
+                popular=True
+            ),
+            MenuItem(
+                name="Margherita Pizza",
+                description="Fresh tomatoes, mozzarella, basil, and tomato base that bring out its exceptional taste",
+                price=9.99,
+                category="Pizza",
+                image="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=500",
+                popular=False
             ),
             MenuItem(
                 name="Pasta Carbonara",
-                description="Creamy pasta with pancetta and parmesan",
-                price=249,
-                category="pasta",
-                image="/images/carbo.jpg",
-                popular=True
+                description="Creamy pasta with bacon, egg, and parmesan",
+                price=10.99,
+                category="Pasta",
+                image="https://images.unsplash.com/photo-1612874742237-6526221588e3?w=500",
+                popular=False
             ),
             MenuItem(
                 name="Chocolate Lava Cake",
-                description="Warm chocolate cake with a molten center",
-                price=179,
-                category="dessert",
-                image="/images/lavas.jpg",
+                description="Warm chocolate cake with molten center served with vanilla ice cream",
+                price=6.99,
+                category="Dessert",
+                image="https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=500",
                 popular=True
             ),
             MenuItem(
                 name="Caesar Salad",
-                description="Fresh romaine lettuce with Caesar dressing",
-                price=199,
-                category="salad",
-                image="/images/salad.jpg",
+                description="Fresh romaine lettuce, croutons, and parmesan",
+                price=8.99,
+                category="Salad",
+                image="https://images.unsplash.com/photo-1546793665-c74683f339c1?w=500",
                 popular=False
             ),
             MenuItem(
-                name="Grilled Salmon",
-                description="Fresh salmon with lemon butter sauce",
-                price=399,
-                category="main",
-                image="/images/salmon.jpg",
-                popular=False
-            ),
-            MenuItem(
-                name="Mojito",
-                description="Refreshing mint and lime cocktail",
-                price=149,
-                category="drinks",
-                image="/images/mojito.jpg",
-                popular=True
-            ),
-            MenuItem(
-                name="Classic Burger",
-                description="Juicy beef patty with fresh vegetables",
-                price=189,
-                category="main",
-                image="/images/burger.jpg",
-                popular=False
-            ),
-            MenuItem(
-                name="Veggie Burger",
-                description="Plant-based patty with fresh vegetables",
-                price=169,
-                category="main",
-                image="/images/burger.jpg",
+                name="Punjabi Paneer Roll (veg)",
+                description="The amalgam of various vegetable choices, Daytona Cream, Garlic - Rattle, Enhance, plated with masala Cheese ball",
+                price=7.99,
+                category="Main Course",
+                image="https://images.unsplash.com/photo-1626074353765-517a681e40be?w=500",
                 popular=False
             ),
         ]
