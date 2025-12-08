@@ -31,14 +31,14 @@ export default function ClientAuth() {
         setTimeout(() => setCopiedField(''), 2000);
     };
 
-    // Handle Registration
     const handleRegister = async (e) => {
         e.preventDefault();
         setError('');
         setLoading(true);
 
         try {
-            const response = await fetch('http://localhost:8000/api/auth/register', {
+            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+            const response = await fetch(`${apiUrl}/api/auth/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ export default function ClientAuth() {
                 setError(data.detail || 'Registration failed');
             }
         } catch (err) {
-            setError('Network error. Please ensure backend is running on port 8000.');
+            setError('Network error. Please ensure backend is running.');
         } finally {
             setLoading(false);
         }
@@ -68,7 +68,8 @@ export default function ClientAuth() {
         setLoading(true);
 
         try {
-            const response = await fetch('http://localhost:8000/api/auth/login', {
+            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+            const response = await fetch(`${apiUrl}/api/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -90,7 +91,7 @@ export default function ClientAuth() {
                 setError(data.detail || 'Login failed');
             }
         } catch (err) {
-            setError('Network error. Please ensure backend is running on port 8000.');
+            setError('Network error. Please ensure backend is running.');
         } finally {
             setLoading(false);
         }
@@ -185,8 +186,8 @@ export default function ClientAuth() {
                     <button
                         onClick={() => setActiveTab('login')}
                         className={`flex-1 py-3 text-sm font-semibold ${activeTab === 'login'
-                                ? 'text-orange-600 border-b-2 border-orange-600'
-                                : 'text-gray-500 hover:text-gray-700'
+                            ? 'text-orange-600 border-b-2 border-orange-600'
+                            : 'text-gray-500 hover:text-gray-700'
                             }`}
                     >
                         Login
@@ -194,8 +195,8 @@ export default function ClientAuth() {
                     <button
                         onClick={() => setActiveTab('register')}
                         className={`flex-1 py-3 text-sm font-semibold ${activeTab === 'register'
-                                ? 'text-orange-600 border-b-2 border-orange-600'
-                                : 'text-gray-500 hover:text-gray-700'
+                            ? 'text-orange-600 border-b-2 border-orange-600'
+                            : 'text-gray-500 hover:text-gray-700'
                             }`}
                     >
                         Register
